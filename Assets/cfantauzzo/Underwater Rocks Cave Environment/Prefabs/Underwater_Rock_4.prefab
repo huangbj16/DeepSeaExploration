@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4966713594387100}
   - component: {fileID: 33083294392060336}
   - component: {fileID: 23937210966772060}
-  - component: {fileID: 710277719155507250}
   m_Layer: 0
   m_Name: Underwater_Rock_4_LOD1
   m_TagString: Untagged
@@ -82,20 +81,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &710277719155507250
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564403572816560}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300008, guid: b5c23b2c3b26ec346845429b59ca544e, type: 3}
 --- !u!1 &1774823293725560
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +92,6 @@ GameObject:
   - component: {fileID: 4041045503051908}
   - component: {fileID: 33467124023709444}
   - component: {fileID: 23303986263807078}
-  - component: {fileID: 6080062202325498435}
   m_Layer: 0
   m_Name: Underwater_Rock_4_LOD2
   m_TagString: Untagged
@@ -178,20 +162,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6080062202325498435
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1774823293725560}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: b5c23b2c3b26ec346845429b59ca544e, type: 3}
 --- !u!1 &1800477744359676
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,9 +10,9 @@ public class ActuatorGridGenerator : MonoBehaviour
 
     private int col = 4; // Number of columns (horizontal)
     private int row = 5; // Number of rows (vertical)
-    private float radius = 100f; // Radius of the hemisphere
+    private float radius = 40f; // Radius of the hemisphere
     private float padding = Mathf.PI / 6.0f;
-    private int[] actuatorIds = new int[]{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 };
+    private int[] actuatorIds = new int[] { 10, 9, 8, 7, 6, 1, 2, 3, 4, 5, 40, 39, 38, 37, 36, 31, 32, 33, 34, 35 };
 
     // Start is called before the first frame update
     void Start()

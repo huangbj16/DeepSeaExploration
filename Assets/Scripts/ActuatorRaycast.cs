@@ -10,7 +10,8 @@ public class ActuatorRaycast : MonoBehaviour
     public int motor_id = -1;
     private Material highlightMaterial;
     private Material defaultMaterial;
-    private float maxDistance = 1.0f;
+    private float maxDistance = 0.5f;
+    private int maxIntensity = 15;
 
     private GameObject senderObject;
     private TcpSender sender;
@@ -29,7 +30,7 @@ public class ActuatorRaycast : MonoBehaviour
         {
             { "addr", motor_id },
             { "mode", 0 },
-            { "duty", 15 },
+            { "duty", 0 },
             { "freq", 2 },
             { "wave", 0 }
         };
@@ -45,12 +46,13 @@ public class ActuatorRaycast : MonoBehaviour
         // Perform the raycast
         if (Physics.Raycast(point.position, direction, out hit, maxDistance))
         {
-            if (hit.collider.gameObject.name != "Plane")
+            if (hit.collider.gameObject.name.Contains("Rock"))
             {
                 Debug.Log(this.name + motor_id + " Hit " + hit.collider.gameObject.name + ", Distance = " + hit.distance);
                 Debug.DrawRay(point.position, direction * hit.distance, Color.red);
                 this.GetComponent<Renderer>().material = highlightMaterial;
-                StartVibrate();
+                int intensity = CalculateIntensity(hit.distance);
+                StartVibrate(intensity);
             }
             else
             {
@@ -67,6 +69,17 @@ public class ActuatorRaycast : MonoBehaviour
         }
     }
 
+    private int CalculateIntensity(float distance)
+    {
+        if (distance >= 0 && distance <= maxDistance)
+        {
+            return Mathf.RoundToInt((maxDistance - distance) / maxDistance * (float)maxIntensity);
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
     public string DictionaryToString(Dictionary<string, int> dictionary)
     {
@@ -78,7 +91,7 @@ public class ActuatorRaycast : MonoBehaviour
         return dictionaryString.TrimEnd(',', ' ') + "}";
     }
 
-    public void StartVibrate()
+    public void StartVibrate(int intensity = 7)
     {
         if (!isTriggered)
         {
@@ -86,13 +99,28 @@ public class ActuatorRaycast : MonoBehaviour
             // send TCP command
             if (sender.isConnected)
             {
-                Debug.Log("Send start command to PORT:9051");
+                Debug.Log("Send START command to PORT:9051");
                 command["mode"] = 1;
+                command["duty"] = intensity;
                 string commandString = DictionaryToString(command) + "\n";
                 Debug.Log(commandString);
                 sender.SendData(commandString);
             }
             // collusionData = new CollusionData(motor_id, other);
+        }
+        else // already triggered, see if intensity needs update.
+        {
+            if (sender.isConnected)
+            {
+                if (command["duty"] != intensity)
+                {
+                    Debug.Log("Send UPDATE command to PORT:9051");
+                    command["duty"] = intensity;
+                    string commandString = DictionaryToString(command) + "\n";
+                    Debug.Log(commandString);
+                    sender.SendData(commandString);
+                }
+            }
         }
     }
 
@@ -108,10 +136,11 @@ public class ActuatorRaycast : MonoBehaviour
         {
             isTriggered = false;
             //send TCP command
-            if (!sender.isConnected)
+            if (sender.isConnected)
             {
-                Debug.Log("Send stop command to PORT:9051");
+                Debug.Log("Send STOP command to PORT:9051");
                 command["mode"] = 0;
+                command["duty"] = 0;
                 string commandString = DictionaryToString(command) + "\n";
                 Debug.Log(commandString);
                 sender.SendData(commandString);
