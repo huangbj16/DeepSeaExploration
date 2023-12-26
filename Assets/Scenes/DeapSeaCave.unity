@@ -8654,6 +8654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collisionAudioEffect: {fileID: 705853788}
+  mainCamera: {fileID: 1688980435}
 --- !u!4 &5655254435199955761
 Transform:
   m_ObjectHideFlags: 0
